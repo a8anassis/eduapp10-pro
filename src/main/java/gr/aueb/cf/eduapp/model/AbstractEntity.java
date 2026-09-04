@@ -28,7 +28,7 @@ public class AbstractEntity {
     private Instant updatedAt;
 
     @Column(nullable = false)
-    private Boolean deleted;
+    private boolean deleted;
 
     @Column(name="deleted_at", columnDefinition = "DATETIME")
     private Instant deletedAt;
