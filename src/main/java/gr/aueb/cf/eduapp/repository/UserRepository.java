@@ -20,5 +20,4 @@ public interface UserRepository extends JpaRepository<User, Long>,
     @EntityGraph(attributePaths = {"role", "role.capabilities"})
     Optional<User> findByUsernameAndDeletedFalse(String username);
 
-
 }
