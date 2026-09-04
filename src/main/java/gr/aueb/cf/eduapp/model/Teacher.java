@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +33,11 @@ public class Teacher extends AbstractEntity {
     private String lastname;
 
     @Setter(AccessLevel.PACKAGE)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Setter(AccessLevel.PACKAGE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
@@ -40,6 +46,24 @@ public class Teacher extends AbstractEntity {
     @JoinColumn(name = "personal_info_id")
     private PersonalInfo personalInfo;
 
+    public void addUser(User user) {
+        this.user = user;
+        user.setTeacher(this);
+    }
 
+    public void removeUser(User user) {
+        this.user = null;
+        user.setTeacher(null);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Teacher teacher)) return false;
+        return Objects.equals(getVat(), teacher.getVat());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getVat());
+    }
 }
