@@ -17,6 +17,7 @@ public record TeacherInsertDTO(
         @Size(min = 2)
         String lastname,
 
+        @NotNull
         @Pattern(regexp = "\\d{9,}")
         String vat,
 

@@ -11,7 +11,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long>,
+        JpaSpecificationExecutor<Teacher> {
 
     Optional<Teacher> findByUuid(UUID uuid);
     Optional<Teacher> findByUuidAndDeletedFalse(UUID uuid);
