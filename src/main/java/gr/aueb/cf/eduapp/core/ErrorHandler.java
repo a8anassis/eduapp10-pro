@@ -41,7 +41,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                 .body(new ErrorResponseDTO(e.getCode(), e.getMessage()));
     }
 
-    @ExceptionHandler({EntityAlreadyExistsException.class})
+    @ExceptionHandler(EntityAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDTO> handleEntityAlreadyExistsException(EntityAlreadyExistsException e) {
         log.warn("Entity already exists. Message={}", e.getMessage());
         return ResponseEntity
@@ -94,7 +94,6 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponseDTO> handleAuthenticationException(AuthenticationException e,
                                                                           HttpServletRequest request) {
-
         log.warn("Authentication failed for IP={}", request.getRemoteAddr());
 
         String errorCode = switch (e) {
