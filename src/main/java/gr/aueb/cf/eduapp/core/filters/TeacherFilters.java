@@ -14,6 +14,6 @@ public class TeacherFilters {
     private String vat;
     private String amka;
     private String lastname;
-    private String deleted;
+    private boolean deleted;
     private String region;
 }

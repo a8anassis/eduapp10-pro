@@ -268,7 +268,8 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters) throws EntityNotFoundException {
+    public Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters)
+            throws EntityNotFoundException {
         return null;
     }
 
