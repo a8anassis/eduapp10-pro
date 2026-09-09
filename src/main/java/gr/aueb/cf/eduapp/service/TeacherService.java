@@ -59,7 +59,7 @@ public class TeacherService implements ITeacherService {
     public TeacherReadOnlyDTO saveTeacher(TeacherInsertDTO dto)
             throws EntityAlreadyExistsException, EntityInvalidArgumentException {
 
-        if (dto.vat() != null && teacherRepository.findByVat(dto.vat()).isPresent()) {
+        if (dto.vat() != null && isTeacherExistsByVat(dto.vat())) {
             throw new EntityAlreadyExistsException("Teacher", "Teacher with vat=" + dto.vat() + " already exists");
         }
 
@@ -320,4 +320,9 @@ public class TeacherService implements ITeacherService {
         return "";
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isTeacherExistsByVat(String vat) {
+        return teacherRepository.findByVat(vat).isPresent();
+    }
 }
