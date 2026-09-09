@@ -19,6 +19,7 @@ public class TeacherSpecification {
         return ((root, query, criteriaBuilder) -> lastname == null ? criteriaBuilder.conjunction() :
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("lastname")), "%" + lastname.toLowerCase() + "%"));
     }
+
     public static Specification<Teacher> hasRegion(String region) {
         return ((root, query, criteriaBuilder) -> region == null ? criteriaBuilder.conjunction() :
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("region")), "%" + region.toLowerCase() + "%"));
