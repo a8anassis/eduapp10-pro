@@ -11,6 +11,7 @@ description = 'edu10-restapp-pro'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.AMAZON
     }
 }
 
@@ -37,6 +38,11 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
     implementation 'org.apache.tika:tika-core:3.2.3'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+
+
+
 }
 
 tasks.named('test', Test) {
