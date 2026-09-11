@@ -34,18 +34,13 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             errorCode = (String) jwtErrorCode;
             message = (String) jwtErrorMessage;
         } else {
-            errorCode = switch (e.getClass().getSimpleName()) {
-                case "BadCredentialsException" -> "BAD_CREDENTIALS";
-                case "DisabledException" -> "ACCOUNT_DISABLED";
-                case "LockedException" -> "ACCOUNT_LOCKED";
-                case "AccountExpiredException" -> "ACCOUNT_EXPIRED";
-                case "CredentialsExpiredException" -> "CREDENTIALS_EXPIRED";
-                default -> "UNAUTHORIZED";
-            };
-            message = e.getMessage();
+            errorCode = "UNAUTHORIZED";
+            message = "Authentication required";
         }
 
-        log.warn("User not authenticated, with message={}", message);
+        log.warn("User not authenticated uri={}, errorCode={}, with message={}",
+                request.getRequestURI(), errorCode, e.getMessage());
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json; charset=UTF-8");
 

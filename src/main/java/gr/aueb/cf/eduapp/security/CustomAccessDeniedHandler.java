@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,9 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        log.warn("Access denied for user to request={} with message={}", request.getRequestURI(), accessDeniedException.getMessage());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.warn("Access denied for user={}, uri={}. Message={}",
+                username, request.getRequestURI(), accessDeniedException.getMessage());
 
         // Set the response status and content type
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
