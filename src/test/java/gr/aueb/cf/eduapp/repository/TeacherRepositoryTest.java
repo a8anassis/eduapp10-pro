@@ -54,37 +54,6 @@ class TeacherRepositoryTest {
         entityManager.persistAndFlush(region);
     }
 
-    private Teacher createDummyData(String suffix, boolean deleted) {
-        User user = new User();
-        user.setUsername("user_" + suffix);
-        user.setPassword("secret");
-        role.addUser(user);
-
-        PersonalInfo personalInfo = new PersonalInfo();
-        personalInfo.setAmka("amka_" + suffix);
-        personalInfo.setIdentityNumber("id_" + suffix);
-        personalInfo.setPlaceOfBirth("Athens");
-        personalInfo.setMunicipalityOfRegistration("Athens");
-
-        Teacher teacher = new Teacher();
-        teacher.setFirstname("First_" + suffix);
-        teacher.setLastname("Last_" + suffix);
-        teacher.setVat("vat_" + suffix);
-        teacher.setPersonalInfo(personalInfo);
-        teacher.addUser(user);
-        region.addTeacher(teacher);
-
-        if (deleted) {
-            teacher.softDelete();
-        }
-
-        teacherRepository.save(teacher);
-        entityManager.flush();
-        entityManager.clear();
-
-        return teacher;
-    }
-
     @Test
     void findByUuid_returnsTeacher_whenExists() {
         Teacher saved = createDummyData("uuid-hit", false);
@@ -188,5 +157,36 @@ class TeacherRepositoryTest {
         boolean exists = teacherRepository.existsByUuidAndUser_Uuid(teacher.getUuid(), other.getUser().getUuid());
 
         assertThat(exists).isFalse();
+    }
+
+    private Teacher createDummyData(String suffix, boolean deleted) {
+        User user = new User();
+        user.setUsername("user_" + suffix);
+        user.setPassword("secret");
+        role.addUser(user);
+
+        PersonalInfo personalInfo = new PersonalInfo();
+        personalInfo.setAmka("amka_" + suffix);
+        personalInfo.setIdentityNumber("id_" + suffix);
+        personalInfo.setPlaceOfBirth("Athens");
+        personalInfo.setMunicipalityOfRegistration("Athens");
+
+        Teacher teacher = new Teacher();
+        teacher.setFirstname("First_" + suffix);
+        teacher.setLastname("Last_" + suffix);
+        teacher.setVat("vat_" + suffix);
+        teacher.setPersonalInfo(personalInfo);
+        teacher.addUser(user);
+        region.addTeacher(teacher);
+
+        if (deleted) {
+            teacher.softDelete();
+        }
+
+        teacherRepository.save(teacher);
+        entityManager.flush();
+        entityManager.clear();
+
+        return teacher;
     }
 }
